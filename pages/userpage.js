@@ -3,7 +3,7 @@ import { QuizContext } from "@/context/QuizContext";
 import { useRouter } from "next/router";
 import TopList from "@/components/TopList";
 
-export default function userpage() {
+export default function UserPage() {
   const router = useRouter();
   const { username } = router.query;
 

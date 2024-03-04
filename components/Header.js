@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const Header = () => {
@@ -16,22 +17,23 @@ const Header = () => {
 
 	return (
 		<header className="flex w-full h-[40px]  bg-blue-100 py-2 px-10 justify-between font-mono">
-			<a href="/" className="hover:text-gray-500 hover:underline">
+			<Link href="/" className="hover:text-gray-500 hover:underline">
 				GOQUIZ
-			</a>
+			</Link>
+			
 			<div className="flex justify-between gap-7">
-				<a href="/" className="hover:text-gray-500 hover:underline">
+				<Link href="/" className="hover:text-gray-500 hover:underline">
 					Home
-				</a>
+				</Link>
 				{/* If .env.local is present we show admin, if not its hidden. */}
 				{fileExist ? (
-					<a href="/adminpage" className="hover:text-gray-500 hover:underline">
+					<Link href="/adminpage" className="hover:text-gray-500 hover:underline">
 						Admin
-					</a>
+					</Link>
 				) : (
-					<a href="/" onClick={() => alert("You are missing the .env.local file.")} className="hover:text-gray-500 hover:underline">
+					<Link href="/" onClick={() => alert("You are missing the .env.local file.")} className="hover:text-gray-500 hover:underline">
 						Admin
-					</a>
+					</Link>
 				)}
 			</div>
 		</header>

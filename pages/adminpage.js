@@ -3,7 +3,7 @@ import { QuizContext } from "@/context/QuizContext";
 import TopList from "@/components/TopList";
 import { useRef } from "react";
 
-export default function adminpage({ adminUsername, adminPassword }) {
+export default function AdminPage({ adminUsername, adminPassword }) {
 	// Local state to toggle the editing mode
 	const [isEditing, setIsEditing] = useState(false);
 
