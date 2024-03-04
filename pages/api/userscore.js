@@ -1,9 +1,9 @@
-import { store } from '@vercel/storage';
+import { kv } from '@vercel/kv';
 
 export default async function handler(req, res) {
     if (req.method === "GET") {
         try {
-            const scoreData = await store.get("scoreData", { provider: 'userscore' });
+            const scoreData = await kv.get("scoreData");
             res.status(200).json(scoreData || []);
         } catch (error) {
             console.error(error);
@@ -12,9 +12,9 @@ export default async function handler(req, res) {
     } else if (req.method === "POST") {
         try {
             const { username, score } = req.body;
-            const existingScoreData = await store.get("scoreData", { provider: 'userscore' }) || { scores: [] };
+            const existingScoreData = (await kv.get("scoreData")) || { scores: [] };
             existingScoreData.scores.push({ username, score });
-            await store.set("scoreData", existingScoreData, { provider: 'userscore' });
+            await kv.put("scoreData", existingScoreData);
             res.status(200).json({ message: "Score updated successfully" });
         } catch (error) {
             console.error(error);
@@ -22,7 +22,7 @@ export default async function handler(req, res) {
         }
     } else if (req.method === "DELETE") {
         try {
-            await store.remove("scoreData", { provider: 'userscore' });
+            await kv.delete("scoreData");
             res.status(200).json({ message: "User scores cleared successfully." });
         } catch (error) {
             console.error("Error clearing user scores:", error);

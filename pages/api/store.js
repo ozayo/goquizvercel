@@ -1,9 +1,9 @@
-import { store } from '@vercel/storage';
+import { kv } from '@vercel/kv';
 
 export default async function handler(req, res) {
     if (req.method === "GET") {
         try {
-            const questions = await store.get("questions", { provider: 'userscore' });
+            const questions = await kv.get("questions");
             res.status(200).json(questions || []);
         } catch (error) {
             console.error(error);
@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     } else if (req.method === "POST") {
         try {
             const questions = req.body;
-            await store.set("questions", questions, { provider: 'userscore' });
+            await kv.put("questions", questions);
             res.status(200).json({ message: "Questions updated successfully" });
         } catch (error) {
             console.error(error);
