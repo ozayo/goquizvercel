@@ -38,55 +38,55 @@ export default function AdminPage({ adminUsername, adminPassword }) {
 		setStateQuestions(data);
 	};
 
-	// Function to update the list of questions and send to backend
-	const updateQuestions = async () => {
-		const orderedChoices = [newQuestion.answer, newQuestion.choiceTwo, newQuestion.choiceThree, newQuestion.choiceFour];
+ // Function to update the list of questions and send to backend
+ const updateQuestions = async () => {
+	const orderedChoices = [newQuestion.answer, newQuestion.choiceTwo, newQuestion.choiceThree, newQuestion.choiceFour];
 
-		const updatedQuestion = {
+	const updatedQuestion = {
 			question: newQuestion.question,
 			choices: orderedChoices,
 			answer: newQuestion.answer,
-		};
+	};
 
-		let updatedQuestionsList = [...stateQuestions.questions];
+	let updatedQuestionsList = [...stateQuestions.questions];
 
-		if (indexBeingEdited !== null) {
+	if (indexBeingEdited !== null) {
 			// Update the question at index that is being edited
 			updatedQuestionsList[indexBeingEdited] = updatedQuestion;
-		} else {
+	} else {
 			// If not editing, push the new question to the list
 			updatedQuestionsList.push(updatedQuestion);
-		}
+	}
 
-		const response = await fetch("/api/store", {
+	const response = await fetch("/api/store", {
 			method: "POST",
 			body: JSON.stringify({ questions: updatedQuestionsList }),
-		});
-		const data = await response.json();
-		console.log(data);
-		setIndexBeingEdited(null);
-		setIsEditing(false);
-		setIsSending(false);
+	});
+	const data = await response.json();
+	console.log(data);
+	setIndexBeingEdited(null);
+	setIsEditing(false);
+	setIsSending(false);
 
-		// Fetch to update UI with latest data
-		fetchQuestions();
-	};
+	// Fetch to update UI with latest data
+	fetchQuestions();
+};
 
 	// Handles form submission, validates the question, and triggers question update
 	function handleForm(e) {
-		if (newQuestion.question != "") {
-			setIsSending(true);
-			e.preventDefault();
-			console.log(e.target.value);
-			updateQuestions();
-			// Resets the form fields after submission
-			const resetNewQuestion = { ...newQuestion };
-			for (const key in resetNewQuestion) {
-				resetNewQuestion[key] = "";
-			}
-			setNewQuestion(resetNewQuestion);
+		if (newQuestion.question !== "") {
+				setIsSending(true);
+				e.preventDefault();
+				console.log(e.target.value);
+				updateQuestions();
+				// Resets the form fields after submission
+				const resetNewQuestion = { ...newQuestion };
+				for (const key in resetNewQuestion) {
+						resetNewQuestion[key] = "";
+				}
+				setNewQuestion(resetNewQuestion);
 		} else alert("You need to fill in the question form.");
-	}
+}
 
 	// Fetches the list of questions when the component mounts
 	useEffect(() => {
@@ -196,17 +196,17 @@ export default function AdminPage({ adminUsername, adminPassword }) {
 	// Clear all score
 	const handleClearScores = async () => {
 		try {
-			const response = await fetch("/api/userscore", {
-				method: "DELETE",
-			});
-			const data = await response.json();
-			console.log(data);
-			fetchQuestions();
-			window.location.reload(); // Refresh the page after delete user scores
+				const response = await fetch("/api/userscore", {
+						method: "DELETE",
+				});
+				const data = await response.json();
+				console.log(data);
+				fetchQuestions();
+				window.location.reload(); // Refresh the page after delete user scores
 		} catch (error) {
-			console.error("Error clearing user scores:", error);
+				console.error("Error clearing user scores:", error);
 		}
-	};
+};
 
 	// Renders login form if user is not logged in
 	if (!isLoggedIn) {

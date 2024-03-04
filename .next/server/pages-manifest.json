@@ -2,5 +2,7 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/userpage": "pages/userpage.js"
+  "/api/envHandler": "pages/api/envHandler.js",
+  "/api/userscore": "pages/api/userscore.js",
+  "/api/store": "pages/api/store.js"
 }
