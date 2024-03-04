@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     } else if (req.method === "POST") {
         try {
             const questions = req.body;
-            await kv.put("questions", questions);
+            await kv.set("questions", questions);
             res.status(200).json({ message: "Questions updated successfully" });
         } catch (error) {
             console.error(error);

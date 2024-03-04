@@ -12,9 +12,9 @@ export default async function handler(req, res) {
     } else if (req.method === "POST") {
         try {
             const { username, score } = req.body;
-            const existingScoreData = (await kv.get("scoreData")) || { scores: [] };
+            const existingScoreData = await kv.get("scoreData") || { scores: [] };
             existingScoreData.scores.push({ username, score });
-            await kv.put("scoreData", existingScoreData);
+            await kv.set("scoreData", existingScoreData);
             res.status(200).json({ message: "Score updated successfully" });
         } catch (error) {
             console.error(error);
